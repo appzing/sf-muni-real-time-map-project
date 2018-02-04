@@ -1,0 +1,56 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.routes-list {
+	border: 3px solid coral;
+	padding: 16px;
+	position: absolute;
+	overflow-y: scroll;
+	left: 100px;
+	top: 70px;
+	width: 800px;
+	height: 1200px;
+}
+
+input[type=checkbox] {
+	width: 30px;
+	height: 30px;
+	box-sizing: border-box;
+	margin: 3px 10px;
+}
+
+input[type=checkbox] + label {
+  color: #3182bd;
+  font-style: italic;
+  font-size: 3em
+}
+input[type=checkbox]:checked + label {
+  color: #f00;
+  font-style: normal;
+}
