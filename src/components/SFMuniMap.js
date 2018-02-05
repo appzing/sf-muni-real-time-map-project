@@ -1,8 +1,9 @@
 
 import React, { Component } from "react";
 import { geoMercator, geoPath } from "d3-geo";
-import { feature } from "topojson-client";
 import { get } from "axios";
+import Route from './Route';
+
 
 class SFMuniMap extends Component {
 	constructor() {
@@ -70,7 +71,6 @@ class SFMuniMap extends Component {
 			})
 	}
 
-
 	componentDidMount() {
 		this.loadNeighborhoods();
 		this.loadStreets();
@@ -89,7 +89,7 @@ class SFMuniMap extends Component {
 							key={ `path-${ i }` }
 							d={ geoPath().projection(this.projection())(d) }
 							className="neighborhoods"
-							fill={ `rgba(255, 255, 229,${1 / this.state.neighborhoodData.length * i})` }
+							fill={ `rgba(173,221,142,${1 / this.state.neighborhoodData.length * i})` }
 							stroke="#FFFFFF"
 							strokeWidth={ 1 }
 						/>
@@ -117,9 +117,9 @@ class SFMuniMap extends Component {
 							key={ `path-${ i }` }
 							d={ geoPath().projection(this.projection())(d) }
 							className="arteries"
-							fill={ `rgba(38,50,56,${1 / this.state.arteriesData.length * i})` }
-							stroke="#e34a33"
-							strokeWidth={ 3 }
+							fill={ `rgba(49,163,84,${1 / this.state.arteriesData.length * i})` }
+							stroke="#31a354"
+							strokeWidth={ 2 }
 						/>
 					))
 				}
@@ -138,6 +138,13 @@ class SFMuniMap extends Component {
 					))
 				}
 			</g>
+			{ this.props.selectedRoutes.map(routeTag =>
+				<Route
+					key={routeTag}
+					routeTag={routeTag}
+				/>
+				)
+			}
 		  </svg>
 		)
 	}
