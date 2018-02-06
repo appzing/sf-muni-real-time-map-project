@@ -24,11 +24,11 @@ class Bus extends Component {
 	render() {
 		return (
 			<g transform={`translate(${this.createPath().centroid(this.props.d)})`}>
-				<svg viewBox="0 0 100 100" width={300} height={300}>
+				<svg viewBox="0 0 100 100" width={250} height={250}>
 					<path
 						fill={this.props.color}
 						d="M9.5 14.25l-5.584 2.936 1.066-6.218L.465 6.564l6.243-.907L9.5 0l2.792 5.657 6.243.907-4.517 4.404 1.066 6.218"
-						strokeWidth={20}
+						strokeWidth={2}
 					/>
 				</svg>
 			</g>

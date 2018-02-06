@@ -23,6 +23,17 @@ class SFMuniMap extends Component {
 			.translate([ 1200 / 2, 1100 / 2 ])
 	}
 
+	reduceSize(features) {
+		return features.map(feature => {
+			return {
+				type:feature.type,
+				geometry: {
+					...feature.geometry
+				}
+			}
+		})
+	}
+
 	loadNeighborhoods() {
 		get("/assets/sfmaps/neighborhoods.json")
 			.then(response => {
@@ -42,7 +53,8 @@ class SFMuniMap extends Component {
 					console.log(`There was a problem: ${response.status}`)
 					return
 				}
-				const streetsData = response.data.features;
+				const streetsData = this.reduceSize(response.data.features);
+				console.log(this.reduceSize(response.data.features));
 				this.setState({streetsData});
 			})
 	}
@@ -54,7 +66,7 @@ class SFMuniMap extends Component {
 					console.log(`There was a problem: ${response.status}`)
 					return
 				}
-				const arteriesData = response.data.features;
+				const arteriesData = this.reduceSize(response.data.features);
 				this.setState({arteriesData});
 			})
 	}
@@ -66,14 +78,14 @@ class SFMuniMap extends Component {
 					console.log(`There was a problem: ${response.status}`)
 					return
 				}
-				const freewaysData = response.data.features;
+				const freewaysData = this.reduceSize(response.data.features);
 				this.setState({freewaysData});
 			})
 	}
 
 	componentDidMount() {
-		this.loadNeighborhoods();
 		this.loadStreets();
+		this.loadNeighborhoods();
 		this.loadArteries();
 		this.loadFreeways();
 
@@ -82,20 +94,6 @@ class SFMuniMap extends Component {
 	render() {
 		return (
 		  <svg width={ 1200 } height={ 1100 } viewBox="0 0 1200 1100">
-		    <g className="neighborhoods">
-				{
-					this.state.neighborhoodData.map((d,i) => (
-						<path
-							key={ `path-${ i }` }
-							d={ geoPath().projection(this.projection())(d) }
-							className="neighborhoods"
-							fill={ `rgba(173,221,142,${1 / this.state.neighborhoodData.length * i})` }
-							stroke="#FFFFFF"
-							strokeWidth={ 1 }
-						/>
-					))
-				}
-		    </g>
 			<g className="streets">
 				{
 					this.state.streetsData.map((d,i) => (
@@ -103,8 +101,22 @@ class SFMuniMap extends Component {
 							key={ `path-${ i }` }
 							d={ geoPath().projection(this.projection())(d) }
 							className="streets"
-							fill={ `rgba(38,50,56,${1 / this.state.streetsData.length * i})` }
-							stroke="#fdbb84"
+							fill={ `rgba(255,255,255,${1 / this.state.streetsData.length * i})` }
+							stroke="#38414e"
+							strokeWidth={ 1 }
+						/>
+					))
+				}
+			</g>
+			<g className="neighborhoods">
+				{
+					this.state.neighborhoodData.map((d,i) => (
+						<path
+							key={ `path-${ i }` }
+							d={ geoPath().projection(this.projection())(d) }
+							className="neighborhoods"
+							fill={ `rgba(232,232,232,${1 / this.state.neighborhoodData.length * i})` }
+							stroke="#e8e8e8"
 							strokeWidth={ 1 }
 						/>
 					))
@@ -117,8 +129,8 @@ class SFMuniMap extends Component {
 							key={ `path-${ i }` }
 							d={ geoPath().projection(this.projection())(d) }
 							className="arteries"
-							fill={ `rgba(49,163,84,${1 / this.state.arteriesData.length * i})` }
-							stroke="#31a354"
+							fill={ `rgba(255,255,255,${1 / this.state.arteriesData.length * i})` }
+							stroke="#FFFFFF"
 							strokeWidth={ 2 }
 						/>
 					))
@@ -131,9 +143,9 @@ class SFMuniMap extends Component {
 							key={ `path-${ i }` }
 							d={ geoPath().projection(this.projection())(d) }
 							className="freeways"
-							fill={ `rgba(38,50,56,${1 / this.state.freewaysData.length * i})` }
-							stroke="#3182bd"
-							strokeWidth={ 3 }
+							fill={ `rgba(255,238,156,${1 / this.state.freewaysData.length * i})` }
+							stroke="#FFEE9C"
+							strokeWidth={ 2 }
 						/>
 					))
 				}

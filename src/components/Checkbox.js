@@ -46,7 +46,7 @@ class Checkbox extends Component {
     render() {
         return(
             <p>
-                <input type="checkbox" className="filled-in" checked={ this.state.isActive } id={this.props.tag} onClick={this.toggleClick}/>
+                <input type="checkbox" checked={ this.state.isActive } id={this.props.tag} onClick={this.toggleClick}/>
                 <label htmlFor={this.props.tag}>{ this.props.title } </label>
             </p>
         )

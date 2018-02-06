@@ -43,6 +43,8 @@ input[type=checkbox] {
 	height: 40px;
 	box-sizing: border-box;
 	margin: 3px 10px;
+	border: 1px solid #3182bd;
+	opacity: 0.3;
 }
 
 input[type=checkbox] + label {
