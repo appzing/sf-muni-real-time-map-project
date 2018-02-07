@@ -19,12 +19,6 @@ class Checkbox extends Component {
         }
     }
 
-    componentWillUpdate(nextProps, nextState) {
-        if (nextProps.currentRoutes !== this.props.currentRoutes) {
-            this.updateSelected(nextProps.currentRoutes)
-        }
-    }
-
     updateSelected = (selectedRoutes) => {
         if(selectedRoutes.indexOf(this.props.tag)>-1){
             this.setState({
