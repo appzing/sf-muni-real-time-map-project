@@ -27,7 +27,6 @@ class Route extends Component {
 		this.loadRoutes();
 	}
 
-
 	getRouteConfig(routeTag) {
 		return (`http://webservices.nextbus.com/service/publicJSONFeed?command=routeConfig&a=sf-muni&r=${routeTag}`);
 	}
