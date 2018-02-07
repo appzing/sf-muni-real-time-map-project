@@ -1,7 +1,10 @@
+/*
+* This component shows the buses at various points
+*
+*/
 import _ from 'underscore';
 import React, { Component } from "react"
 import { get } from "axios"
-import { geoMercator, geoPath } from "d3-geo";
 import { feature } from 'topojson-client'
 import Bus from './Bus';
 
@@ -13,8 +16,6 @@ class Buses extends Component {
         }
 
 		this.loadBuses = this.loadBuses.bind(this);
-		this.createProjection = this.createProjection.bind(this);
-		this.createPath = this.createPath.bind(this);
 		this.getBusLocation = this.getBusLocation.bind(this);
     }
 
@@ -26,17 +27,6 @@ class Buses extends Component {
 
 	componentWillUnmount() {
 		clearInterval(this.timer);
-	}
-
-	createProjection() {
-		return geoMercator()
-			.center([-122.433701, 37.767683])
-			.scale(600000)
-			.translate([ 1200 / 2, 1100 / 2 ])
-	}
-
-	createPath() {
-		return geoPath().projection(this.createProjection());
 	}
 
 

@@ -1,8 +1,13 @@
+/*
+* This component to select each individual route
+*
+*/
+
 import React, { Component } from 'react'
 
 class Checkbox extends Component {
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state = {
             isActive: false
         }
@@ -45,10 +50,10 @@ class Checkbox extends Component {
 
     render() {
         return(
-            <p>
+            <span className={"input input--checkbox input--routes input--routes-"+this.props.tag}>
                 <input type="checkbox" checked={ this.state.isActive } id={this.props.tag} onClick={this.toggleClick}/>
                 <label htmlFor={this.props.tag}>{ this.props.title } </label>
-            </p>
+            </span>
         )
     }
 }

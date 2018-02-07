@@ -1,40 +1,22 @@
-import React, { Component } from 'react';
-import { geoMercator, geoPath } from "d3-geo";
+/*
+* This component shows the icon for the bus
+*
+*/
+import React from 'react';
+import {createPath} from '../utils/createPath';
 
-class Bus extends Component {
-
-	constructor() {
-		super()
-
-		this.createProjection = this.createProjection.bind(this);
-		this.createPath = this.createPath.bind(this);
-	}
-
-	createProjection() {
-		return geoMercator()
-			.center([-122.433701, 37.767683])
-			.scale(600000)
-			.translate([ 1200 / 2, 1100 / 2 ])
-	}
-
-	createPath() {
-		return geoPath().projection(this.createProjection());
-	}
-
-	render() {
-		return (
-			<g transform={`translate(${this.createPath().centroid(this.props.d)})`}>
-				<svg viewBox="0 0 100 100" width={250} height={250}>
-					<path
-						fill={this.props.color}
-						d="M9.5 14.25l-5.584 2.936 1.066-6.218L.465 6.564l6.243-.907L9.5 0l2.792 5.657 6.243.907-4.517 4.404 1.066 6.218"
-						strokeWidth={2}
-					/>
-				</svg>
-			</g>
-		)
-	}
-}
+const Bus = ({d, color}) => (
+	<g transform={`translate(${createPath().centroid(d)})`}>
+		<svg width="35px" height="41px" viewBox="0 0 35 41">
+		    <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+		        <g fill={color}>
+		            <path
+					d="M17.5,0 C8.16693182,0 0,1.05141346 0,8.41032212 L0,29.4358317 C0,33.536226 3.28741477,36.7947404 7.42427557,36.7947404 L4.77272727,39.4230769 L4.77272727,41 L30.2272727,41 L30.2272727,39.4230769 L27.5757244,36.7947404 C31.7124858,36.7947404 35,33.536226 35,29.4358317 L35,8.41032212 C35,1.05141346 26.8330682,0 17.5,0 L17.5,0 Z M7.95454545,33.1153846 C6.15125,33.1153846 4.77272727,31.7488822 4.77272727,29.9615385 C4.77272727,28.1739976 6.15125,26.8076923 7.95454545,26.8076923 C9.75784091,26.8076923 11.1363636,28.1739976 11.1363636,29.9615385 C11.1363636,31.7488822 9.75784091,33.1153846 7.95454545,33.1153846 L7.95454545,33.1153846 Z M15.9090909,18.9230769 L4.77272727,18.9230769 L4.77272727,9.46153846 L15.9090909,9.46153846 L15.9090909,18.9230769 L15.9090909,18.9230769 Z M27.0454545,33.1153846 C25.2421591,33.1153846 23.8636364,31.7488822 23.8636364,29.9615385 C23.8636364,28.1739976 25.2421591,26.8076923 27.0454545,26.8076923 C28.84875,26.8076923 30.2272727,28.1739976 30.2272727,29.9615385 C30.2272727,31.7488822 28.84875,33.1153846 27.0454545,33.1153846 L27.0454545,33.1153846 Z M30.2272727,18.9230769 L19.0909091,18.9230769 L19.0909091,9.46153846 L30.2272727,9.46153846 L30.2272727,18.9230769 L30.2272727,18.9230769 Z" id="Shape"></path>
+		        </g>
+		    </g>
+		</svg>
+	</g>
+)
 
 
 export default Bus;

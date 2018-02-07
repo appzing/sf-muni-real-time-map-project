@@ -1,7 +1,11 @@
+/*
+* This component shows various bus routes
+*
+*/
 import _ from 'underscore';
 import React, { Component } from "react"
 import { get } from "axios"
-import { geoMercator, geoPath } from "d3-geo";
+import {createPath} from '../utils/createPath';
 import { feature } from 'topojson-client'
 import Buses from './Buses';
 
@@ -16,24 +20,11 @@ class Route extends Component {
         }
 
 		this.loadRoutes = this.loadRoutes.bind(this);
-		this.createProjection = this.createProjection.bind(this);
-		this.createPath = this.createPath.bind(this);
 		this.getRouteConfig = this.getRouteConfig.bind(this);
     }
 
 	componentDidMount() {
 		this.loadRoutes();
-	}
-
-	createProjection() {
-		return geoMercator()
-			.center([-122.433701, 37.767683])
-			.scale(600000)
-			.translate([ 1200 / 2, 1100 / 2 ])
-	}
-
-	createPath() {
-		return geoPath().projection(this.createProjection());
 	}
 
 
@@ -69,7 +60,7 @@ class Route extends Component {
                 this.state.paths.map((d,i) => (
 					<path
 						key={ `path-${ i }` }
-						d={ this.createPath()(d) }
+						d={ createPath()(d) }
 						className="paths"
 						fill={this.state.color}
 						stroke={this.state.color}

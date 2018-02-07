@@ -1,24 +1,25 @@
-import React, { Component } from 'react';
+/*
+* This component renders the list of bus routes in the sidebar
+*
+*/
+
+import React from 'react';
 import Checkbox from './Checkbox';
 
 
 
-class RoutesList extends Component {
-
-	render() {
-		return (
-			<div className="routes-list"> {
-                    this.props.routesList.map((route,i) => (
-                        <Checkbox key={`checkbox-${route.tag}`}
-                            tag={route.tag}
-                            title={route.title}
-                            updateRoute={this.props.updateRoute}
-                            selectedRoutes={this.props.selectedRoutes}
-                        />))
-                }
-            </div>
-		);
-	}
-}
+const RoutesList = (props) => (
+	<div className="routes-list"> {
+            props.routesList.map((route,i) => (
+                <Checkbox key={`checkbox-${route.tag}`}
+                    tag={route.tag}
+                    title={route.title}
+                    updateRoute={props.updateRoute}
+                    selectedRoutes={props.selectedRoutes}
+					routesList={props.routesList}
+                />))
+        }
+    </div>
+);
 
 export default RoutesList

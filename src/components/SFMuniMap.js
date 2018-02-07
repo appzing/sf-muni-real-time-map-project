@@ -1,37 +1,26 @@
-
+/*
+* This component draws the map and renders the different bus routes on the map
+*
+*/
 import React, { Component } from "react";
-import { geoMercator, geoPath } from "d3-geo";
+import { createPath } from '../utils/createPath';
+import { filterMapData } from '../utils/filterMapData';
 import { get } from "axios";
 import Route from './Route';
 
 
 class SFMuniMap extends Component {
-	constructor() {
-		super()
+
+	constructor(props) {
+
+		super(props)
+
 		this.state = {
 			neighborhoodData: [],
 			streetsData:[],
 			arteriesData:[],
 			freewaysData:[]
 		}
-	}
-
-	projection() {
-		return geoMercator()
-			.center([-122.433701, 37.767683])
-			.scale(600000)
-			.translate([ 1200 / 2, 1100 / 2 ])
-	}
-
-	reduceSize(features) {
-		return features.map(feature => {
-			return {
-				type:feature.type,
-				geometry: {
-					...feature.geometry
-				}
-			}
-		})
 	}
 
 	loadNeighborhoods() {
@@ -41,7 +30,7 @@ class SFMuniMap extends Component {
 					console.log(`There was a problem: ${response.status}`)
 					return
 				}
-				const neighborhoodData = response.data.features;
+				const neighborhoodData = filterMapData(response.data.features);
 				this.setState({neighborhoodData});
 			})
 	}
@@ -53,8 +42,7 @@ class SFMuniMap extends Component {
 					console.log(`There was a problem: ${response.status}`)
 					return
 				}
-				const streetsData = this.reduceSize(response.data.features);
-				console.log(this.reduceSize(response.data.features));
+				const streetsData = filterMapData(response.data.features);
 				this.setState({streetsData});
 			})
 	}
@@ -66,7 +54,7 @@ class SFMuniMap extends Component {
 					console.log(`There was a problem: ${response.status}`)
 					return
 				}
-				const arteriesData = this.reduceSize(response.data.features);
+				const arteriesData = filterMapData(response.data.features);
 				this.setState({arteriesData});
 			})
 	}
@@ -78,12 +66,12 @@ class SFMuniMap extends Component {
 					console.log(`There was a problem: ${response.status}`)
 					return
 				}
-				const freewaysData = this.reduceSize(response.data.features);
+				const freewaysData = filterMapData(response.data.features);
 				this.setState({freewaysData});
 			})
 	}
 
-	componentDidMount() {
+	componentWillMount() {
 		this.loadStreets();
 		this.loadNeighborhoods();
 		this.loadArteries();
@@ -99,7 +87,7 @@ class SFMuniMap extends Component {
 					this.state.streetsData.map((d,i) => (
 						<path
 							key={ `path-${ i }` }
-							d={ geoPath().projection(this.projection())(d) }
+							d={ createPath()(d) }
 							className="streets"
 							fill={ `rgba(255,255,255,${1 / this.state.streetsData.length * i})` }
 							stroke="#38414e"
@@ -113,7 +101,7 @@ class SFMuniMap extends Component {
 					this.state.neighborhoodData.map((d,i) => (
 						<path
 							key={ `path-${ i }` }
-							d={ geoPath().projection(this.projection())(d) }
+							d={ createPath()(d) }
 							className="neighborhoods"
 							fill={ `rgba(232,232,232,${1 / this.state.neighborhoodData.length * i})` }
 							stroke="#e8e8e8"
@@ -127,7 +115,7 @@ class SFMuniMap extends Component {
 					this.state.arteriesData.map((d,i) => (
 						<path
 							key={ `path-${ i }` }
-							d={ geoPath().projection(this.projection())(d) }
+							d={ createPath()(d) }
 							className="arteries"
 							fill={ `rgba(255,255,255,${1 / this.state.arteriesData.length * i})` }
 							stroke="#FFFFFF"
@@ -141,7 +129,7 @@ class SFMuniMap extends Component {
 					this.state.freewaysData.map((d,i) => (
 						<path
 							key={ `path-${ i }` }
-							d={ geoPath().projection(this.projection())(d) }
+							d={ createPath()(d) }
 							className="freeways"
 							fill={ `rgba(255,238,156,${1 / this.state.freewaysData.length * i})` }
 							stroke="#FFEE9C"
